@@ -13,7 +13,7 @@ import google.generativeai as genai
 # Replace "YOUR_GEMINI_API_KEY" with the key you just copied.
 # For better security, it's recommended to use an environment variable:
 # genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-genai.configure(api_key="AIzaSyBYUm59AbdNBrEsqdi2cYHU79v9VxP1o-E") 
+genai.configure(api_key="") 
 
 
 app = FastAPI()
