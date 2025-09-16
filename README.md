@@ -132,6 +132,3 @@ loan-predictor/
 - Implement authentication & user loan history tracking.  
 
 ---
-
-## 👨‍💻 Author  
-Developed by **[Trushant Rathod](https://github.com/trushantrathod)**  
