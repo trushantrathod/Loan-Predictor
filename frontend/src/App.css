@@ -1,0 +1,261 @@
+/* App.css */
+
+/* --- FONT IMPORT --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- GENERAL STYLES (Professional Dark Theme) --- */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #121212;
+  color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+/* --- MAIN CONTAINER --- */
+.container {
+  background: #1e1e1e;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 700px;
+  width: 90%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  transition: all 0.3s ease-in-out;
+}
+
+/* --- TYPOGRAPHY --- */
+h1 {
+  text-align: center;
+  color: #4dabf7;
+  margin-bottom: 35px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 2.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #a0a0a0;
+}
+
+/* --- FORM LAYOUT --- */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  position: relative;
+}
+
+/* --- INPUT & SELECT STYLES --- */
+input, select {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #252525;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 35px !important;
+}
+
+select option {
+  background-color: #252525;
+  color: #e0e0e0;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #a0a0a0;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* --- FOCUS & HOVER STATES --- */
+input:focus, select:focus {
+  outline: none;
+  border-color: #4dabf7;
+  box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.4);
+}
+
+/* --- BUTTON STYLES --- */
+button {
+  grid-column: span 2;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #3395ff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.25);
+}
+
+/* --- BASE RESULT STYLE --- */
+.result {
+  margin-top: 25px;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  min-height: 90px; /* IMPORTANT: Prevents the container from collapsing */
+  display: flex; /* Helps vertically center content */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* Make it invisible by default instead of removing it */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px); /* Add a slight slide-up effect */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* --- DYNAMIC RESULT ANIMATIONS --- */
+
+/* Make the result box VISIBLE when it has an approved or rejected class */
+.result.approved,
+.result.rejected {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Keyframe for the celebratory "Approved" animation */
+@keyframes approved-burst {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); /* Green glow starts */
+  }
+  70% {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px 25px rgba(34, 197, 94, 0); /* Glow expands and fades */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Keyframe for the "Rejected" shake animation */
+@keyframes rejection-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+}
+
+/* This is the class for an APPROVED result */
+.result.approved {
+  background: rgba(34, 197, 94, 0.15); /* Success green background */
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  animation: approved-burst 0.8s ease-out 0.2s forwards; /* Added a small delay */
+}
+
+.result.approved p {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+/* This is the class for a REJECTED result */
+.result.rejected {
+  background: rgba(239, 68, 68, 0.1); /* Failure red background */
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  animation: rejection-shake 0.5s ease-in-out forwards; /* SHAKE ANIMATION */
+}
+
+.result.rejected p {
+  color: #ef4444;
+}
+
+/* --- GEMINI ANALYSIS STYLES --- */
+
+.status-message {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.gemini-analysis {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 15px;
+  text-align: left;
+  padding: 0 10px;
+  
+  /* ✅ IMPORTANT: This makes the line breaks (\n) from Gemini render correctly */
+  white-space: pre-wrap; 
+}
+
+.confidence-score {
+  font-size: 1rem;      /* Increased from 0.85rem for better size */
+  font-weight: 500;   /* Made the text slightly bolder */
+  opacity: 0.9;         /* Increased from 0.7 for better visibility */
+  margin-top: 20px;   /* Added some space above it */
+  margin-bottom: 0;
+  color: #a0a0a0;     /* Gave it a clear but soft color */
+}
+
+/* --- AI ANALYSING STYLES --- */
+
+/* Add a keyframe animation for the pulsing text */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* Style for the result box while loading */
+.result.analysing {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  background: rgba(77, 171, 247, 0.1);
+  border: 1px solid rgba(77, 171, 247, 0.2);
+}
+
+/* Style for the "AI analysing..." text itself */
+.analysing-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #4dabf7;
+  animation: pulse 2s infinite ease-in-out;
+}
