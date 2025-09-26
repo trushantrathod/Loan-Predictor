@@ -171,4 +171,3 @@ def predict(applicant: Applicant):
     }
     
     return final_response
-
