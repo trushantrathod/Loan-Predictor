@@ -1,261 +1,448 @@
-/* App.css */
-
 /* --- FONT IMPORT --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* --- GENERAL STYLES (Professional Dark Theme) --- */
+/* --- CSS VARIABLES FOR THEME --- */
+:root {
+  --background-dark: #0f172a; /* slate-900 */
+  --surface-dark: #1e293b;   /* slate-800 */
+  --border-color: #334155;   /* slate-700 */
+  --primary-accent: #38bdf8; /* sky-400 */
+  --primary-accent-hover: #0ea5e9; /* sky-500 */
+  --success-green: #4ade80;  /* green-400 */
+  --error-red: #f87171;      /* red-400 */
+  --text-primary: #e2e8f0;   /* slate-200 */
+  --text-secondary: #94a3b8; /* slate-400 */
+  --success-surface: rgba(74, 222, 128, 0.1);
+  --error-surface: rgba(248, 113, 113, 0.1);
+}
+
+/* --- GENERAL STYLES --- */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #121212;
-  color: #e0e0e0;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+}
+
+.app-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
-  padding: 20px 0;
+  padding: 2rem 1rem;
 }
 
-/* --- MAIN CONTAINER --- */
-.container {
-  background: #1e1e1e;
-  border-radius: 16px;
-  padding: 40px;
-  max-width: 700px;
-  width: 90%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
-  transition: all 0.3s ease-in-out;
-}
-
-/* --- TYPOGRAPHY --- */
-h1 {
-  text-align: center;
-  color: #4dabf7;
-  margin-bottom: 35px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  font-size: 2.5rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #a0a0a0;
-}
-
-/* --- FORM LAYOUT --- */
-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.form-group {
-  position: relative;
-}
-
-/* --- INPUT & SELECT STYLES --- */
-input, select {
+.main-content {
   width: 100%;
-  padding: 12px 15px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #252525;
-  color: #e0e0e0;
-  font-size: 0.95rem;
-  font-family: 'Poppins', sans-serif;
-  transition: all 0.3s ease;
+  max-width: 56rem; /* 896px */
+}
+
+/* --- HEADER --- */
+.app-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.header-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-accent);
+  margin: 0;
+}
+
+.header-subtitle {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+/* --- FORM STYLES --- */
+.loan-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-fieldset {
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.form-fieldset legend {
+  padding: 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--primary-accent);
+}
+
+.fieldset-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.fieldset-grid.two-columns {
+  grid-template-columns: repeat(1, 1fr);
+}
+.fieldset-grid.three-columns {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 768px) {
+  .fieldset-grid.two-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .fieldset-grid.three-columns {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* --- FORM GROUP & INPUTS --- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.form-group input, .form-group select {
+  background-color: var(--surface-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  width: 100%;
   box-sizing: border-box;
 }
 
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  padding-right: 35px !important;
-}
-
-select option {
-  background-color: #252525;
-  color: #e0e0e0;
-}
-
-.select-wrapper {
-  position: relative;
-}
-
-.select-wrapper::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid #a0a0a0;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-/* --- FOCUS & HOVER STATES --- */
-input:focus, select:focus {
+.form-group input:focus, .form-group select:focus {
   outline: none;
-  border-color: #4dabf7;
-  box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.4);
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
 }
 
-/* --- BUTTON STYLES --- */
-button {
-  grid-column: span 2;
-  padding: 14px;
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-adornment {
+  position: absolute;
+  color: var(--text-secondary);
+}
+.input-adornment.prefix { left: 0.75rem; }
+.input-adornment.suffix { right: 0.75rem; }
+
+.input-wrapper input {
+  padding-left: 2.25rem;
+}
+.input-wrapper input[name="LoanAmount"] {
+    padding-right: 2.5rem;
+}
+.input-wrapper input:not(:placeholder-shown) + .suffix,
+.input-wrapper input:focus + .suffix {
+  color: var(--text-primary);
+}
+
+
+/* --- CIBIL SLIDER --- */
+.cibil-slider-container {
+  margin-top: 1.5rem;
+}
+
+.cibil-label-input-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.label-with-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info-button {
+  background-color: var(--border-color);
+  color: var(--text-primary);
   border: none;
-  border-radius: 8px;
-  background: #007bff;
-  color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-}
-
-button:hover {
-  background: #3395ff;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.25);
-}
-
-/* --- BASE RESULT STYLE --- */
-.result {
-  margin-top: 25px;
-  padding: 20px;
-  text-align: center;
-  border-radius: 8px;
-  min-height: 90px; /* IMPORTANT: Prevents the container from collapsing */
-  display: flex; /* Helps vertically center content */
-  flex-direction: column;
+  display: flex;
   justify-content: center;
   align-items: center;
-  
-  /* Make it invisible by default instead of removing it */
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px); /* Add a slight slide-up effect */
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: background-color 0.2s;
 }
 
-/* --- DYNAMIC RESULT ANIMATIONS --- */
-
-/* Make the result box VISIBLE when it has an approved or rejected class */
-.result.approved,
-.result.rejected {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+.info-button:hover {
+  background-color: #475569; /* slate-600 */
 }
 
-/* Keyframe for the celebratory "Approved" animation */
-@keyframes approved-burst {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); /* Green glow starts */
-  }
-  70% {
-    transform: scale(1.02);
-    box-shadow: 0 0 10px 25px rgba(34, 197, 94, 0); /* Glow expands and fades */
-  }
-  100% {
-    transform: scale(1);
-  }
+.cibil-info-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px); /* Position above the button */
+  left: 0;
+  background-color: #27364b; /* A bit lighter than surface-dark for contrast */
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 220px;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: tooltip-fade-in 0.3s ease-out;
 }
 
-/* Keyframe for the "Rejected" shake animation */
-@keyframes rejection-shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-6px); }
+@keyframes tooltip-fade-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* This is the class for an APPROVED result */
-.result.approved {
-  background: rgba(34, 197, 94, 0.15); /* Success green background */
-  border: 1px solid rgba(34, 197, 94, 0.4);
-  animation: approved-burst 0.8s ease-out 0.2s forwards; /* Added a small delay */
+.cibil-info-tooltip h4 {
+  margin: 0 0 0.75rem 0;
+  color: var(--primary-accent);
+  font-size: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
 }
 
-.result.approved p {
-  color: #22c55e;
+.cibil-info-tooltip ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cibil-info-tooltip li {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.cibil-info-tooltip li strong {
+  color: var(--text-primary);
   font-weight: 600;
+  min-width: 70px; /* Align text */
+  display: inline-block;
 }
 
-/* This is the class for a REJECTED result */
-.result.rejected {
-  background: rgba(239, 68, 68, 0.1); /* Failure red background */
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  animation: rejection-shake 0.5s ease-in-out forwards; /* SHAKE ANIMATION */
+.cibil-label-input-wrapper label {
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
-.result.rejected p {
-  color: #ef4444;
+.cibil-number-input {
+  background-color: var(--background-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  width: 5rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+.cibil-number-input::-webkit-outer-spin-button,
+.cibil-number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.cibil-number-input {
+  -moz-appearance: textfield;
 }
 
-/* --- GEMINI ANALYSIS STYLES --- */
+.slider-wrapper {
+  position: relative;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+}
 
-.status-message {
+.cibil-slider-track {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--border-color);
+  border-radius: 999px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  overflow: hidden;
+}
+
+.cibil-slider-progress {
+  height: 100%;
+  border-radius: 999px;
+  transition: background-color 0.3s;
+}
+.cibil-slider-progress.red { background-color: #ef4444; }
+.cibil-slider-progress.yellow { background-color: #f59e0b; }
+.cibil-slider-progress.green { background-color: #22c55e; }
+
+.cibil-slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  -webkit-appearance: none;
+  background: transparent;
+  margin: 0;
+  z-index: 2;
+}
+
+.cibil-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 50%;
+  background: var(--primary-accent);
+  border: 3px solid var(--background-dark);
+  box-shadow: 0 0 0 1px var(--primary-accent);
+}
+
+.cibil-slider::-moz-range-thumb {
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 50%;
+  background: var(--primary-accent);
+  border: 3px solid var(--background-dark);
+  box-shadow: 0 0 0 1px var(--primary-accent);
+}
+
+
+/* --- SUBMIT BUTTON & SPINNER --- */
+.submit-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--primary-accent-hover);
+  color: white;
+  font-weight: 700;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.submit-button:hover:not(:disabled) {
+  background-color: var(--primary-accent);
+}
+.submit-button:disabled {
+  background-color: #475569; /* slate-600 */
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* --- MESSAGES & RESULT CARD --- */
+.error-message {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: var(--error-surface);
+  border: 1px solid var(--error-red);
+  color: var(--error-red);
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.result-card {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid;
+  animation: fade-in 0.5s ease-out;
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result-card.approved {
+  background-color: var(--success-surface);
+  border-color: var(--success-green);
+}
+.result-card.rejected {
+  background-color: var(--error-surface);
+  border-color: var(--error-red);
+}
+
+.result-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+@media (min-width: 640px) {
+  .result-header {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+.result-icon {
+  width: 4rem;
+  height: 4rem;
+}
+.result-card.approved .result-icon { color: var(--success-green); }
+.result-card.rejected .result-icon { color: var(--error-red); }
+
+.result-header-text h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+.result-card.approved h2 { color: var(--success-green); }
+.result-card.rejected h2 { color: var(--error-red); }
+
+.result-header-text p {
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.result-body {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+.result-body h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  margin-top: 0;
-  margin-bottom: 15px;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
 }
-
-.gemini-analysis {
-  font-size: 0.95rem;
+.analysis-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: var(--text-secondary);
+}
+.analysis-content p {
+  margin: 0;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--primary-accent);
   line-height: 1.6;
-  opacity: 0.9;
-  margin-bottom: 15px;
-  text-align: left;
-  padding: 0 10px;
-  
-  /* ✅ IMPORTANT: This makes the line breaks (\n) from Gemini render correctly */
-  white-space: pre-wrap; 
 }
 
-.confidence-score {
-  font-size: 1rem;      /* Increased from 0.85rem for better size */
-  font-weight: 500;   /* Made the text slightly bolder */
-  opacity: 0.9;         /* Increased from 0.7 for better visibility */
-  margin-top: 20px;   /* Added some space above it */
-  margin-bottom: 0;
-  color: #a0a0a0;     /* Gave it a clear but soft color */
-}
-
-/* --- AI ANALYSING STYLES --- */
-
-/* Add a keyframe animation for the pulsing text */
-@keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
-}
-
-/* Style for the result box while loading */
-.result.analysing {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  background: rgba(77, 171, 247, 0.1);
-  border: 1px solid rgba(77, 171, 247, 0.2);
-}
-
-/* Style for the "AI analysing..." text itself */
-.analysing-text {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #4dabf7;
-  animation: pulse 2s infinite ease-in-out;
-}
