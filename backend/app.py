@@ -11,14 +11,13 @@ import google.generativeai as genai
 app = FastAPI(
     title="Loan Prediction API",
     description="An API to predict loan eligibility and provide AI-generated financial tips.",
-    version="3.0.1"
+    version="3.0.2"
 )
 
 # --- 2. Middleware Configuration ---
-# --- 2. Middleware Configuration ---
+# Corrected: Removed duplicate allow_origins entry.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -29,19 +28,20 @@ app.add_middleware(
 try:
     model = joblib.load("model.joblib")
 except FileNotFoundError:
+    print("Warning: 'model.joblib' not found. The prediction endpoint will not work.")
     model = None
 
-# --- 4. Configure Gemini API (with Hardcoded Key) ---
-# WARNING: This is NOT recommended for production or shared code.
+# --- 4. Configure Gemini API ---
+# WARNING: Storing API keys directly in code is a major security risk.
+# For any real application, use environment variables instead.
 try:
-    # Directly paste your API key here
+    # IMPORTANT: Replace this placeholder with your actual key for testing.
     api_key = "AIzaSyAIcd1VE4y-MVLPCTQyMz02Mgpty4ukwBo" 
 
     if not api_key or api_key == "YOUR_GEMINI_API_KEY_HERE":
         raise ValueError("Please replace 'YOUR_GEMINI_API_KEY_HERE' with your actual Gemini API key.")
     
     genai.configure(api_key=api_key)
-    # Initialize the Gemini Pro model
     gemini_model = genai.GenerativeModel('gemini-2.5-flash-preview-05-20')
 
 except Exception as e:
@@ -86,7 +86,7 @@ async def generate_versatile_tips(applicant_data: dict, prediction_result: dict)
     - Applicant's Monthly Income: ₹{applicant_data['ApplicantIncome']:,.0f}
     - Co-applicant's Monthly Income: ₹{applicant_data['CoapplicantIncome']:,.0f}
     - Total Monthly Income: ₹{applicant_data['ApplicantIncome'] + applicant_data['CoapplicantIncome']:,.0f}
-    - Requested Loan Amount: ₹{applicant_data['LoanAmount']:,.0f}
+    - Requested Loan Amount: ₹{applicant_data['LoanAmount']:,.0f} (in thousands)
     - Employment: {'Self-Employed' if applicant_data['Self_Employed'] == 'Yes' else 'Salaried'}
 
     **Loan Decision Details:**
@@ -109,7 +109,7 @@ async def generate_versatile_tips(applicant_data: dict, prediction_result: dict)
         return response.text
     except Exception as e:
         print(f"Error generating content with Gemini: {e}")
-        return "Could not generate AI analysis at this time. Please try again later."
+        return f"Could not generate AI analysis due to an error: {e}"
 
 # --- 7. API Endpoints ---
 @app.get("/")
@@ -126,14 +126,14 @@ async def predict(applicant: Applicant):
          raise HTTPException(status_code=503, detail="Gemini AI model not configured. Check API key.")
 
     applicant_dict = applicant.dict()
+    # Convert to DataFrame for the model
     data = pd.DataFrame([applicant_dict])
 
     prediction = model.predict(data)[0]
     probability = model.predict_proba(data)[0][1]
 
+    # Corrected: Removed duplicate keys in the result dictionary.
     result = {
-        "eligible": bool(prediction),
-        "probability": round(float(probability), 3),
         "eligible": bool(prediction),
         "probability": round(float(probability), 3),
     }
