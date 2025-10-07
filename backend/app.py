@@ -15,8 +15,10 @@ app = FastAPI(
 )
 
 # --- 2. Middleware Configuration ---
+# --- 2. Middleware Configuration ---
 app.add_middleware(
     CORSMiddleware,
+    allow_origins=["*"],
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -130,6 +132,8 @@ async def predict(applicant: Applicant):
     probability = model.predict_proba(data)[0][1]
 
     result = {
+        "eligible": bool(prediction),
+        "probability": round(float(probability), 3),
         "eligible": bool(prediction),
         "probability": round(float(probability), 3),
     }

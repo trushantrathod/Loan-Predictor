@@ -1,4 +1,4 @@
-# Loan Eligibility Predictor  
+# Loan Prediction 
 
 A web application that predicts **loan eligibility** using a machine learning model and provides **AI-powered financial advice**.  
 
