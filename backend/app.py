@@ -36,7 +36,7 @@ except FileNotFoundError:
 # For any real application, use environment variables instead.
 try:
     # IMPORTANT: Replace this placeholder with your actual key for testing.
-    api_key = "AIzaSyAIcd1VE4y-MVLPCTQyMz02Mgpty4ukwBo" 
+    api_key = "" 
 
     if not api_key or api_key == "YOUR_GEMINI_API_KEY_HERE":
         raise ValueError("Please replace 'YOUR_GEMINI_API_KEY_HERE' with your actual Gemini API key.")
